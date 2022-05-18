@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustChat", "JustChat\JustChat.csproj", "{79EF7DC8-624F-4505-A69A-A622CCC3F4B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustChat.Tests", "JustChat.Tests\JustChat.Tests.csproj", "{58D299D9-33BA-419D-ACD3-AEB8AF3141BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79EF7DC8-624F-4505-A69A-A622CCC3F4B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79EF7DC8-624F-4505-A69A-A622CCC3F4B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79EF7DC8-624F-4505-A69A-A622CCC3F4B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79EF7DC8-624F-4505-A69A-A622CCC3F4B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D299D9-33BA-419D-ACD3-AEB8AF3141BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D299D9-33BA-419D-ACD3-AEB8AF3141BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D299D9-33BA-419D-ACD3-AEB8AF3141BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D299D9-33BA-419D-ACD3-AEB8AF3141BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

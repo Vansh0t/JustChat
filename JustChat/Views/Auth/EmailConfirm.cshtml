@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Email Confirm";
+}
+@section Scripts {
+    <script>
+        const timeout = 5000;
+        const successText = `Thank you. Your email is now confirmed. You will be redirected to main page in ${5} seconds`
+
+        const url = "/auth/email/vrf"
+        const data = {
+            token:decodeURI(location.search.substring(1).split('=')[1])
+        }
+        httpClient.post(url, data).
+            then((response)=>{
+                setTimeout(()=>{
+                    location.href.replace('/')
+                }, 5000)
+                $("#message").text(successText)
+
+            }).catch((error)=>{
+                $("#message").text(error.response.data)
+            })
+    </script>
+}
+
+<div class="text-center">
+    <p id = "message"></p>
+</div>

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Just Chat";
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to JustChat!</h1>
+    <ul id="chat">
+    </ul>
+    <div class = "d-flex justify-content-center">
+        <input id="chatInput" type="text" placeholder="Message"/>
+        <button class="ms-3" type="button" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+<template id="chatMessageTemplate">
+    <li class="messageItem">
+            <div class = "chatSender">
+                <p></p>
+            </div>
+            <div class="chatMessage">
+                <p class="messageText"><span class="messageTime"></span></p>
+            </div>
+    </li>
+</template>
+
+<template id="chatMessageSelfTemplate">
+    <li class="messageItem">
+            <div class = "chatSender chatSelf">
+                <p></p>
+            </div>
+            <div class="chatMessage chatSelf">
+                <p class="messageText"><span class="messageTime"></span></p>
+            </div>
+        </li>
+</template>
