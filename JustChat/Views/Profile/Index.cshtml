@@ -35,5 +35,14 @@
     </fieldset>
     <fieldset>
         <legend>Password</legend>
+        <div class="d-flex justify-content-center">
+            <div>
+                <form class = "d-flex flex-column align-items-center" id="resetPasswordForm">
+                    <input type="email" placeholder="Current Email" name="email"/>
+                    <p class="errorMsg mb-1" hidden></p>
+                    <button class="mt-2" type="button" onclick="postForm('resetPasswordForm', '/auth/pwd/reset1')">Change Password</button>
+                </form>
+            </div>
+        </div>
     </fieldset>
 </div>

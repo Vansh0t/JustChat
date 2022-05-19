@@ -3,10 +3,10 @@
 }
 
 <div class="text-center">
-    <form id = "signinForm">
-        <input type="text" placeholder="Username or Email" name="credential" required/>
-        <input type="password" placeholder="Password" name="password" required/>
-        <p class="errorMsg" hidden></p>
+    <form id = "signinForm" class="d-flex flex-column align-items-center">
+        <input class="mb-2" type="text" placeholder="Username or Email" name="credential" required/>
+        <input class="mb-3" type="password" placeholder="Password" name="password" required/>
+        <p class="mb-3" class="errorMsg" hidden></p>
         <button type="button" onclick="postForm('signinForm', '/auth/signin', (resp)=>{
             onAuthSuccess(resp)
             window.location.replace('/')

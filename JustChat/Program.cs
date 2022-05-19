@@ -16,7 +16,7 @@ services.AddDbContext<IAuthDbMain<ChatUser>, DbMain>(options=>{
 });
 services.AddJustAuth<ChatUser>(options => {
     options.UseEmailConfirmRedirect("/Auth/EmailConfirm");
-    options.UsePasswordResetRedirect("/auth/pwdreset");
+    options.UsePasswordResetRedirect("/Auth/PasswordReset");
 });
 services.AddScoped<IChatManager, ChatManager>();
 services.AddSignalR();

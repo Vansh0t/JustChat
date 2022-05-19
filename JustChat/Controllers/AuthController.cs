@@ -13,8 +13,10 @@ public class AuthController : Controller
         _logger = logger;
     }
 
-    public IActionResult PwdReset()
+    public IActionResult PasswordReset(string rst)
     {
+        if(rst is null || rst.Trim() == "") return BadRequest();
+        ViewData["token"] = rst;
         return View();
     }
 
