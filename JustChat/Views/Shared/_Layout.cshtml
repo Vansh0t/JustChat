@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - JustChat</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/open-iconic/css/open-iconic-bootstrap.min.css" >
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JustChat.styles.css" asp-append-version="true" />
 </head>
@@ -23,11 +24,16 @@
                         
                         <ul class="navbar-nav flex-grow-1">
                             @if(User.Identity.IsAuthenticated) {
-                                <li>Welcome, @User.FindFirstValue(ClaimTypes.Name)</li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Welcome, @User.FindFirstValue(ClaimTypes.Name)</a>
+                                </li>
                                 bool.TryParse(User.FindFirstValue("IsEmailVerified"), out var emailClaim);
                                 @if(!emailClaim) {
                                     <li class="ms-5 text-warning">We've sent you an email. Please, check it and follow instructions. Click <a href="/auth/email/revrf">here</a> to send another one.</li>
                                 }
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="#" onclick="signout()">Sign Out</a>
+                                </li>
                             }
                             else {
                                 <li class="nav-item">

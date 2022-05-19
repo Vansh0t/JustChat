@@ -1,18 +1,32 @@
 const REFRESH_TOKEN_ENDPOINT = "/auth/jwt/refresh"
-
+const SIGNOUT_ENDPOINT = "/auth/signout"
+const REFRESH_EXPIRATION_DIFF = 10000 //the refresh attempt will happen in (expiration-this_value) ms
 
 const httpClient = axios.create();
 httpClient.defaults.headers.post['Content-Type'] = 'application/json';
 
-var isAuthenticated = ($('#isAuthenticated').val().toLowerCase()==="true")
-console.log(isAuthenticated)
+//var isAuthenticated = ($('#isAuthenticated').val().toLowerCase()==="true")
+//console.log(isAuthenticated)
+const getUtcEpochMsNow = () => {
+    return  Date.parse(new Date().toISOString())
+}
 
-//try silent sign in with refresh token
-if(!isAuthenticated && !window.sessionStorage.getItem("refreshAttemptFailed")) {
+const onAuthSuccess = (resp) => {
+    window.localStorage.setItem('refreshAfter', resp.data.jwt.expiration-REFRESH_EXPIRATION_DIFF)
+    setRefreshTimeout()
+    
+}
+const onRefreshSuccess = (resp) => {
+    window.localStorage.setItem('refreshAfter', resp.data.expiration-REFRESH_EXPIRATION_DIFF)
+    setRefreshTimeout()
+}
+
+
+const refreshJwt = () => {
     httpClient.post(REFRESH_TOKEN_ENDPOINT, {})
-        .then(response=>{
-            console.log(response)
-            location.reload()
+        .then(resp=>{
+            onRefreshSuccess(resp)
+            console.debug("jwt refreshed", resp)
         })
         .catch(error=>{
             if(error.response.status == 403)
@@ -20,7 +34,45 @@ if(!isAuthenticated && !window.sessionStorage.getItem("refreshAttemptFailed")) {
         })
 }
 
+const setRefreshTimeout = () => {
+    const utcEpochMsNow = Date.parse(new Date().toISOString())
+    const expiration = window.localStorage.getItem('refreshAfter')
+    console.debug("refresh timeout set: ",  expiration-utcEpochMsNow)
+    setTimeout(()=> {
+        try {
+            refreshJwt()
+        } catch (error) {
+            console.error(error)
+        }
+    }, expiration-utcEpochMsNow)
+}
 
+
+const refreshAfter = window.localStorage.getItem("refreshAfter")
+//try silent sign in with refresh token
+if(refreshAfter) {
+    if(getUtcEpochMsNow()>=refreshAfter) {
+        refreshJwt()
+    }
+    else {
+        setRefreshTimeout()
+    }
+}
+
+
+
+const signout = ()=> {
+    httpClient.post(SIGNOUT_ENDPOINT)
+        .then(resp=>{
+            window.localStorage.removeItem("refreshAfter")
+            console.debug("signed out", resp)
+            location.reload();
+        })
+        .catch(error=>{
+            if(error.response.status == 403)
+                window.sessionStorage.setItem("refreshAttemptFailed", "true")
+        })
+}
 
 
 
@@ -36,8 +88,13 @@ const postForm = (formId, url, onSuccess)=>{
     });
     httpClient.post(url, formData).
         then((response)=>{
-            if(onSuccess)
-                onSuccess(response)
+            try {
+                if(onSuccess)
+                    onSuccess(response)
+            } catch (error) {
+                console.error(error)
+            }
+            
         }).catch((error)=>{
             console.log(error)
             errorMsg.text(error.response.data)

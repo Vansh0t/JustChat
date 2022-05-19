@@ -7,6 +7,9 @@
         <input type="text" placeholder="Username or Email" name="credential" required/>
         <input type="password" placeholder="Password" name="password" required/>
         <p class="errorMsg" hidden></p>
-        <button type="button" onclick="postForm('signinForm', '/auth/signin', (resp)=>{window.location.replace('/')})">Sign In</button>
+        <button type="button" onclick="postForm('signinForm', '/auth/signin', (resp)=>{
+            onAuthSuccess(resp)
+            window.location.replace('/')
+            })">Sign In</button>
     </form>
 </div>

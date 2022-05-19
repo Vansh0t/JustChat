@@ -3,12 +3,15 @@
 }
 
 <div class="text-center">
-    <form id = "signupForm">
-        <input type="text" placeholder="Username" name="username" required/>
-        <input type="email" placeholder="Email" name = "email" required/>
-        <input type="password" placeholder="Password" name="password" required/>
-        <input type="password" placeholder="Password (Again)" name="passwordConf" required/>
-        <p class="errorMsg" hidden></p>
-        <button type="button" onclick="postForm('signupForm', '/auth/signup', (resp)=>{window.location.replace('/')})">Sign Up</button>
+    <form class="d-flex flex-column align-items-center" id = "signupForm">
+        <input class="mb-2" type="text" placeholder="Username" name="username" required/>
+        <input class="mb-2" type="email" placeholder="Email" name = "email" required/>
+        <input class="mb-2" type="password" placeholder="Password" name="password" required/>
+        <input class="mb-3" type="password" placeholder="Password (Again)" name="passwordConf" required/>
+        <p class="errorMsg mb-3" hidden></p>
+        <button type="button" onclick="postForm('signupForm', '/auth/signup', (resp)=>{
+            onAuthSuccess(resp)
+            window.location.replace('/')
+            })">Sign Up</button>
     </form>
 </div>

@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Profile";
+    ChatUser user = (ChatUser)ViewData["User"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">Profile</h1>
+    <fieldset>
+        <legend>Email</legend>
+        <div class="d-flex justify-content-center">
+            <div>
+                <div>
+                    <input  id = "curEmail" class="text-muted" type="email", value="**********@@@user.Email.Split('@')[^1]" readonly/>
+                    @{
+                        bool.TryParse(User.FindFirstValue("IsEmailVerified"), out var emailClaim);
+                        if(emailClaim) {
+                            <span style="top: auto; margin-left:-0.5rem;" class="text-success oi oi-check position-absolute mt-1"></span>
+                        }
+                        else {
+                            <span style="top: auto; margin-left:-0.5rem;" class="text-danger oi oi-question-mark position-absolute mt-1"></span>
+                        }
+                    }
+                </div>
+                <div class="mt-2">
+                    <form class = "d-flex flex-column align-items-center" id="changeEmailForm">
+                        <input class="mb-1" type="email", placeholder="New Email", name="newEmail" required/>
+                        <input class="mb-1" type="password", placeholder="Current Password", name="password" required/>
+                        <p class="errorMsg mb-1" hidden></p>
+                        <button class="mt-2" type="button" onclick="postForm('changeEmailForm', '/auth/email/change')">Change Email</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </fieldset>
+    <fieldset>
+        <legend>Password</legend>
+    </fieldset>
+</div>

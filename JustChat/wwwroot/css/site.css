@@ -19,6 +19,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-width: 1px;
+}
 #chat {
   margin-top: 1rem;
   list-style-type: none;
@@ -80,7 +86,7 @@ p {
   margin-left: -25px;
   z-index: -11;
   border-style: solid;
-  border-width: 0 0 24px 30px;
+  border-width: 0 0 24px 26px;
   border-color: transparent transparent #d4ebf7 transparent;
 }
 .chatSelf::after{
@@ -91,10 +97,6 @@ p {
 }
 #chatInput {
   width: 80%;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-width: 1px;
 }
 .messageTime {
   font-size: 10px;
@@ -103,4 +105,7 @@ p {
   margin-top: 8px;
   margin-left: 16px;
   
+}
+.errorMsg {
+  color: #d9534f;
 }
