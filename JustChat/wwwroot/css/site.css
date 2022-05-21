@@ -30,41 +30,41 @@ input {
   list-style-type: none;
   height: 60vh;
   overflow-y: auto;
-  background-color:azure;
   border-radius: 1rem;
+  padding: 0;
 }
 .messageItem {
   display: flex;
   flex-direction: row;
+  margin-bottom: 0.5rem;
 }
 
 .chatSender {
   height: fit-content;
   background-color: #d4ebf7;
-  max-height: 40%;
-  width: 10%;
-  max-width: 5rem;
-  border-radius: 1rem;
-  padding: 0.5rem;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
   margin-right: 1rem;
+  text-align: center;
+  vertical-align:auto;
   display: flex;
   justify-content: center;
+  background-size: contain;
 }
 button{
   border-width: 1px;
 }
 .chatSender p{
   font-weight: bold;
-  max-width: 100%;
-  width: fit-content;
   overflow-wrap: break-word;
 }
 .chatMessage {
   background-color: #d4ebf7;
-  min-height: 1rem;
+  min-height: 50px;
   max-width: 80%;
   border-radius: 1rem;
-  margin-bottom: 1rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.5rem;
@@ -76,13 +76,10 @@ p {
   font-family: 'Roboto', sans-serif;
   text-align: start;
 }
-.chatMessage.self{
-  background-color: #7dc4e8;
-}
-.chatMessage::after {
+.arrow::after {
   content: '';
   display: block;
-  margin-top: -16px;
+  margin-top: -2px;
   margin-left: -25px;
   z-index: -11;
   border-style: solid;
@@ -108,4 +105,29 @@ p {
 }
 .errorMsg {
   color: #d9534f;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+}
+.avatar {
+  background-color: #7dc4e8;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  vertical-align: middle;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: auto;
+  font-size: 2rem;
+  cursor:pointer;
+  background-size: contain;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

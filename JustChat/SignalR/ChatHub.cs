@@ -29,38 +29,43 @@ namespace JustChat.SignalR
         }
         public async Task SendMessage(string message) {
             if(message is null || message.Trim() == "") return;
+            var id = int.Parse(Context.UserIdentifier);
             var username = Context.User.GetUserName();
             _chatManager.CreateChatMessage(int.Parse(Context.UserIdentifier), username, message);
+            var avatar = await _context.UserAvatars.FirstOrDefaultAsync(_=>_.ChatUserId==id);
             await _context.SaveChangesAsync();
-            await Clients.All.SendAsync("ReceiveMessage", DateTime.UtcNow, username, message);
+            await Clients.All.SendAsync("ReceiveMessage", DateTime.UtcNow, username, message, avatar?.Url);
         }
         public async Task InitChat() {
                 
             var username = Context.User.GetUserName();
             var id = int.Parse(Context.UserIdentifier);
-            (var messages, var maxPages) = await _chatManager.GetPaginatedQueryAscAsync(0);
+            var messages = _chatManager.GetBeforeTimestampQueryDesc(DateTime.UtcNow);
+            messages = messages.OrderBy(_=>_.SendDateTime);
             var prepMessages = await messages.Select(_=>new {
                 time = _.SendDateTime,
                 sender = _.SenderUsername,
-                text = _.Text
+                text = _.Text,
+                avatarUrl = _.Sender.Avatar.Url
             }).ToArrayAsync();
             await Clients.Caller.SendAsync("InitChat",
                                         new {
                                             Id = id,
                                             Username=username
                                         },
-                                        prepMessages,
-                                        maxPages
+                                        prepMessages
                                         );
         }
-        public async Task GetMessages(int page) {
-            (var messages, var maxPages) = await _chatManager.GetPaginatedQueryAscAsync(page);
+        public async Task GetMessages(DateTime time) {
+            var messages = _chatManager.GetBeforeTimestampQueryDesc(time);
+            //messages = messages.OrderBy(_=>_.SendDateTime);
             var prepMessages = await messages.Select(_=>new {
                 time = _.SendDateTime,
                 sender = _.SenderUsername,
-                text = _.Text
+                text = _.Text,
+                avatarUrl = _.Sender.Avatar.Url
             }).ToArrayAsync();
-            await Clients.Caller.SendAsync("ReceiveMessages", prepMessages, maxPages);
+            await Clients.Caller.SendAsync("ReceiveMessages", prepMessages);
         }
 
     }

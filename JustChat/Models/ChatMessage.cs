@@ -14,5 +14,6 @@ namespace JustChat.Models
         public ChatUser? Sender {get;set;}
         [Required]
         public string Text {get;set;}
+        public IEnumerable<ChatMedia> ChatMedia{get;set;}
     }
 }

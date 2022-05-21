@@ -16,7 +16,16 @@ namespace JustChat.Services.Chat
         /// <param name="GetPaginatedQueryAscAsync"></param>
         /// <returns>Tuple with <see cref="IQueryable"/> with paginated messages and number of the last page</returns>
         Task<(IQueryable<ChatMessage>, double)> GetPaginatedQueryDescAsync(int page);
-
+        /// <summary>
+        /// Get query of all messages posted before DateTime, ordered ascending
+        /// </summary>
+        /// <param name="timestamp">Milliseconds since Epoch</param>
+        IQueryable<ChatMessage> GetBeforeTimestampQueryAsc(DateTime time);
+        /// <summary>
+        /// Get query of all messages posted before DateTime, ordered descending
+        /// </summary>
+        /// <param name="timestamp">Milliseconds since Epoch</param>
+        IQueryable<ChatMessage> GetBeforeTimestampQueryDesc(DateTime time);
         ChatMessage CreateChatMessage(int senderId, string senderUsername, string text, DateTime? sendTime=null);
     }
 }

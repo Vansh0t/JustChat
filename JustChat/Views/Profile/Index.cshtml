@@ -1,11 +1,39 @@
 @{
     ViewData["Title"] = "Profile";
     ChatUser user = (ChatUser)ViewData["User"];
+    string username = user.Username;
+    bool hasAvatar = false;
+    string avatarPlaceholderText;
+    if(user.Username.Length < 3)
+        avatarPlaceholderText = user.Username[..2]; //2 chars minimum length in JustAuth defaults
+    else
+        avatarPlaceholderText = user.Username[..3] + '.';
+    if(user.Avatar is not null && user.Avatar.Url is not null)
+        hasAvatar = true;
+}
+
+@section Scripts {
+    <script>
+        $("#avatarForm input").on('change', (e)=>{
+            $("#avatarForm").submit()
+        })
+    </script>
 }
 
 <div class="text-center">
-    <h1 class="display-4">Profile</h1>
-    <fieldset>
+    <div class = "avatar-container">
+        <form  asp-controller="Profile" asp-action="UploadAvatar" id="avatarForm" enctype="multipart/form-data" method="post" hidden>
+            <input type="file" accept="image/png, image/jpeg" name="image">
+        </form>
+        @if(hasAvatar) {
+            <div style="background-image: url('@user.Avatar.Url');" class="avatar" onclick="$('#avatarForm input').click()"></div>
+        }
+        else {
+            <div class="avatar" onclick="$('#avatarForm input').click();">@avatarPlaceholderText</div>
+        }
+        
+    </div>
+    <fieldset class ="mt-4">
         <legend>Email</legend>
         <div class="d-flex justify-content-center">
             <div>
@@ -25,22 +53,22 @@
                     <form class = "d-flex flex-column align-items-center" id="changeEmailForm">
                         <input class="mb-1" type="email", placeholder="New Email", name="newEmail" required/>
                         <input class="mb-1" type="password", placeholder="Current Password", name="password" required/>
-                        <p class="errorMsg mb-1" hidden></p>
-                        <button class="mt-2" type="button" onclick="postForm('changeEmailForm', '/auth/email/change')">Change Email</button>
+                        <p class="errorMsg mb-2" hidden></p>
+                        <button class="mt-3" type="button" onclick="postForm('changeEmailForm', '/auth/email/change')">Change Email</button>
                     </form>
                 </div>
             </div>
         </div>
         
     </fieldset>
-    <fieldset>
+    <fieldset class ="mt-4">
         <legend>Password</legend>
         <div class="d-flex justify-content-center">
             <div>
                 <form class = "d-flex flex-column align-items-center" id="resetPasswordForm">
-                    <input type="email" placeholder="Current Email" name="email"/>
-                    <p class="errorMsg mb-1" hidden></p>
-                    <button class="mt-2" type="button" onclick="postForm('resetPasswordForm', '/auth/pwd/reset1')">Change Password</button>
+                    <input class="mb-1" type="email" placeholder="Current Email" name="email"/>
+                    <p class="errorMsg mb-2" hidden></p>
+                    <button class="mt-3" type="button" onclick="postForm('resetPasswordForm', '/auth/pwd/reset1')">Change Password</button>
                 </form>
             </div>
         </div>

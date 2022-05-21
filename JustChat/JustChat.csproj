@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\JustAuth\JustAuth\JustAuth.csproj" />
+    <ProjectReference Include="..\..\JustFile\JustFile\JustFile.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

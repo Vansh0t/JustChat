@@ -2,6 +2,9 @@ const REFRESH_TOKEN_ENDPOINT = "/auth/jwt/refresh"
 const SIGNOUT_ENDPOINT = "/auth/signout"
 const REFRESH_EXPIRATION_DIFF = 10000 //the refresh attempt will happen in (expiration-this_value) ms
 
+
+var isAuthenticated = false;
+
 const httpClient = axios.create();
 httpClient.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -10,19 +13,25 @@ httpClient.defaults.headers.post['Content-Type'] = 'application/json';
 const getUtcEpochMsNow = () => {
     return  Date.parse(new Date().toISOString())
 }
+const getUtcEpochMs = (time) => {
+    return  Date.parse(new Date(time).toISOString())
+}
 
 const onAuthSuccess = (resp) => {
     window.localStorage.setItem('refreshAfter', resp.data.jwt.expiration-REFRESH_EXPIRATION_DIFF)
+    isAuthenticated = true
     setRefreshTimeout()
     
 }
 const onRefreshSuccess = (resp) => {
     window.localStorage.setItem('refreshAfter', resp.data.expiration-REFRESH_EXPIRATION_DIFF)
+    isAuthenticated = true;
     setRefreshTimeout()
 }
 
 
 const refreshJwt = () => {
+    isAuthenticated = false;
     httpClient.post(REFRESH_TOKEN_ENDPOINT, {})
         .then(resp=>{
             onRefreshSuccess(resp)
@@ -56,6 +65,7 @@ if(refreshAfter) {
     }
     else {
         setRefreshTimeout()
+        isAuthenticated = true;
     }
 }
 
