@@ -3,13 +3,15 @@
 }
 
 <div class="text-center">
-    <form id = "signinForm" class="d-flex flex-column align-items-center">
+    <form id = "signinForm" class="d-flex flex-column align-items-center position-relative" 
+        onsubmit="postForm('signinForm', '/auth/signin', (resp)=>{
+            onAuthSuccess(resp)
+            window.location.replace('/')
+            }); return false"
+    >
         <input class="mb-2" type="text" placeholder="Username or Email" name="credential" required/>
         <input class="mb-3" type="password" placeholder="Password" name="password" required/>
         <p class="mb-3 errorMsg" hidden></p>
-        <button type="button" onclick="postForm('signinForm', '/auth/signin', (resp)=>{
-            onAuthSuccess(resp)
-            window.location.replace('/')
-            })">Sign In</button>
+        <button type="submit">Sign In</button>
     </form>
 </div>

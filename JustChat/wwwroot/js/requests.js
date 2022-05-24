@@ -35,7 +35,7 @@ const refreshJwt = () => {
     httpClient.post(REFRESH_TOKEN_ENDPOINT, {})
         .then(resp=>{
             onRefreshSuccess(resp)
-            console.debug("jwt refreshed", resp)
+            console.debug("jwt refreshed")
         })
         .catch(error=>{
             if(error.response.status == 403)
@@ -88,6 +88,7 @@ const signout = ()=> {
 
 const postForm = (formId, url, onSuccess)=>{
     const form = $('#'+formId)
+    loaderForElement('#'+formId)
     const errorMsg = $('#'+formId + ' p')
     errorMsg.attr('hidden', true)
     var isFormValid = form.get(0).reportValidity();
@@ -109,5 +110,12 @@ const postForm = (formId, url, onSuccess)=>{
             console.log(error)
             errorMsg.text(error.response.data)
             errorMsg.attr('hidden', false)
+        }).finally(()=> {
+            try {
+                removeLoaderFor('#'+formId)
+            } catch (error) {
+                console.error(error)
+            }
+            
         })
 }

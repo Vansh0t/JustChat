@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/open-iconic/css/open-iconic-bootstrap.min.css" >
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/loader.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JustChat.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/loader.js"></script>
 </head>
 <body>
     <header>
@@ -57,12 +61,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - JustChat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - JustChat
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <template id ="loader-template">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </template>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
     <script src="~/js/requests.js"></script>
     <script src="~/js/media.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

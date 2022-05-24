@@ -26,10 +26,10 @@
             <input type="file" accept="image/png, image/jpeg" name="image">
         </form>
         @if(hasAvatar) {
-            <div style="background-image: url('@user.Avatar.Url');" class="avatar" onclick="$('#avatarForm input').click()"></div>
+            <div style="background-image: url('@user.Avatar.Url');" class="avatar-base avatar" onclick="$('#avatarForm input').click()"></div>
         }
         else {
-            <div class="avatar" onclick="$('#avatarForm input').click();">@avatarPlaceholderText</div>
+            <div class="avatar-base avatar" onclick="$('#avatarForm input').click();">@avatarPlaceholderText</div>
         }
         
     </div>
@@ -50,7 +50,7 @@
                     }
                 </div>
                 <div class="mt-2">
-                    <form class = "d-flex flex-column align-items-center" id="changeEmailForm">
+                    <form class = "d-flex flex-column align-items-center position-relative" id="changeEmailForm">
                         <input class="mb-1" type="email", placeholder="New Email", name="newEmail" required/>
                         <input class="mb-1" type="password", placeholder="Current Password", name="password" required/>
                         <p class="errorMsg mb-2" hidden></p>
@@ -65,7 +65,7 @@
         <legend>Password</legend>
         <div class="d-flex justify-content-center">
             <div>
-                <form class = "d-flex flex-column align-items-center" id="resetPasswordForm">
+                <form class = "d-flex flex-column align-items-center position-relative" id="resetPasswordForm">
                     <input class="mb-1" type="email" placeholder="Current Email" name="email"/>
                     <p class="errorMsg mb-2" hidden></p>
                     <button class="mt-3" type="button" onclick="postForm('resetPasswordForm', '/auth/pwd/reset1')">Change Password</button>

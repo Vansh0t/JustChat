@@ -1,15 +1,26 @@
+const chatElem = $("#chat")
+const setInputDisabled = (disabled)=> {
+    chatInput.prop("disabled", disabled)
+}
+const setScrollHidden = (hidden) => {
+    chatElem.css("overflow-y", hidden?"hidden":"auto")
+}
+
 const setUIError=(error) => {
+    setInputDisabled(true)
+    setScrollHidden(true)
     chatInput.prop("disabled", true)
     chatErrorMsg.text(error)
     chatErrorMsg.prop("hidden", false)
 }
 const unsetUIError = ()=> {
-    chatInput.prop("disabled", false)
+    setInputDisabled(false)
+    setScrollHidden(false)
     chatErrorMsg.text("")
     chatErrorMsg.prop("hidden", true)
 }
 
-
+const SCROLL_THRESHOLD = 200
 const chatErrorMsg = $("#chatError")
 const chatInput = $("#chatInput")
 var initConnAttempts = 3;
@@ -32,7 +43,7 @@ connection.onclose(error=> {
 })
 
 var selfUser = {}
-const chatElem = $("#chat")
+
 const messageTemplate= document.querySelector("#chatMessageTemplate")
 const messageSelfTemplate= document.querySelector("#chatMessageSelfTemplate")
 
@@ -79,7 +90,7 @@ const prepMsgTemplate = (time,sender,text,avatarUrl)=>{
         clone = messageTemplate.content.cloneNode(true)
     let localTime = new Date(time).toLocaleString()
     if(!avatarUrl)
-        clone.querySelector(".chatSender p").innerText = sender
+        clone.querySelector(".chatSender p").innerText = sender.length>2?sender.substring(0,3)+'.':sender.substring(0,2)+'.'
     else
         clone.querySelector(".chatSender").style.backgroundImage = `url('${avatarUrl}')`
 
@@ -113,16 +124,23 @@ const prependChatMessage = (time, sender, text, avatarUrl) => {
     })
 }
 
+var scrollBeforeBatch
 
 chatElem.scroll(() => { 
-    const SCROLL_THRESHOLD = 50;
-    if(!allMessagesLoaded) {
+    
+    if(!allMessagesLoaded && !batchRequested) {
         if(chatElem.scrollTop() < SCROLL_THRESHOLD) {
-            connection.invoke("GetMessages", firstMsg.time) //request next batch of messages before first
+            scrollBeforeBatch = chatElem.scrollTop()
+            console.debug("requesting new batch for scroll pos", chatElem.scrollTop())
             batchRequested = true
-        }
-        else {
-            batchRequested = false
+            connection.invoke("GetMessages", firstMsg.time) //request next batch of messages before first
+            
+            //if loading lasts more than 1 second display loader
+            setTimeout(()=>{
+                if(batchRequested && !allMessagesLoaded)
+                    loaderForElement("#chat-container")
+            }, 700)
+            
         }
     }
     
@@ -130,7 +148,6 @@ chatElem.scroll(() => {
 
 connection.on("InitChat", (user, messages) =>{
     try {
-        console.log(messages)
         selfUser = user
         if(messages.length> 0)
             firstMsg = messages[0]
@@ -139,13 +156,15 @@ connection.on("InitChat", (user, messages) =>{
         });
         renderStyle()
         scrollTo(999999999999)
+        removeLoaderFor("#chat-container")
     } catch (error) {
         console.error(error)
     }
 })
 connection.on("ReceiveMessages", (messages) =>{
     try {
-        console.debug("new batch of messages received, length - ", messages.length)
+        
+        console.debug("new batch of messages received, length - ", messages.length, messages)
         if(messages.length> 0)
             firstMsg = messages.at(-1)
         else
@@ -154,6 +173,8 @@ connection.on("ReceiveMessages", (messages) =>{
             prependChatMessage(msg.time, msg.sender, msg.text, msg.avatarUrl);
         });
         renderStyle()
+        batchRequested = false
+        removeLoaderFor("#chat-container")
     } catch (error) {
         console.error(error)
     }
@@ -171,21 +192,24 @@ connection.on("ReceiveMessage", (time, sender, message, avatarUrl) => {
 });
 
 const startChat = () => {
-    connection.start().then(function () {
+    connection.start()
+    .then(function () {
         console.debug("Chat connection established")
         connection.invoke("InitChat")
     }).catch(function (err) {
         if(initConnAttempts>0) {
             initConnAttempts-=1
-            setTimeout(startChat, 1000)
+            setTimeout(startChat, 2000)
         }
         else {
             setUIError("Unable to connect to chat. Make sure you are loged in and your email is confirmed.");
+            removeLoaderFor("#chat-container")
         }   
+        
         return console.error(err.toString());
     });
 }
-
+loaderForElement("#chat-container")
 startChat();
 
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using JustAuth.Data;
 using JustChat.SignalR;
 using JustChat.Services.Chat;
+using Microsoft.Extensions.Logging.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 

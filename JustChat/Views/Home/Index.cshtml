@@ -7,7 +7,7 @@
     <script src="~/js/chat.js"></script>
 }
 
-<div class="text-center">
+<div id="chat-container" class="text-center position-relative">
     <h1 class="display-4">Welcome to JustChat!</h1>
     <ul id="chat">
     </ul>
@@ -19,7 +19,7 @@
 </div>
 <template id="chatMessageTemplate">
     <li class="messageItem">
-            <div class = "chatSender">
+            <div class = "avatar-base chatSender">
                 <p></p>
             </div>
             <div class="chatMessage">
@@ -30,7 +30,7 @@
 
 <template id="chatMessageSelfTemplate">
     <li class="messageItem">
-            <div class = "chatSender chatSelf">
+            <div class = "avatar-base chatSender chatSelf">
                 <p></p>
             </div>
             <div class="chatMessage chatSelf">

@@ -58,7 +58,6 @@ namespace JustChat.SignalR
         }
         public async Task GetMessages(DateTime time) {
             var messages = _chatManager.GetBeforeTimestampQueryDesc(time);
-            //messages = messages.OrderBy(_=>_.SendDateTime);
             var prepMessages = await messages.Select(_=>new {
                 time = _.SendDateTime,
                 sender = _.SenderUsername,

@@ -4,17 +4,17 @@
 @section Scripts {
     <script>
         const timeout = 5000;
-        const successText = `Thank you. Your email is now confirmed. You will be redirected to main page in ${5} seconds`
+        const successText = `Thank you. Your email is now confirmed. You will be redirected to main page in ${timeout/1000} seconds`
 
         const url = "/auth/email/vrf"
         const data = {
-            token:decodeURI(location.search.substring(1).split('=')[1])
+            token: '@ViewData["token"]'
         }
         httpClient.post(url, data).
             then((response)=>{
                 setTimeout(()=>{
-                    location.href.replace('/')
-                }, 5000)
+                    window.location.replace('/')
+                }, timeout)
                 $("#message").text(successText)
 
             }).catch((error)=>{

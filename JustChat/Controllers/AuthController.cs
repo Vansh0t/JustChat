@@ -24,8 +24,10 @@ public class AuthController : Controller
     {
         return View();
     }
-    public IActionResult EmailConfirm()
+    public IActionResult EmailConfirm(string vrft)
     {
+        if(vrft is null || vrft.Trim() == "") return BadRequest();
+        ViewData["token"] = vrft;
         return View();
     }
     public IActionResult SignIn()
