@@ -25,7 +25,6 @@ public class ProfileController : Controller
     )
     {
         webRootPath = env.WebRootPath;
-        Console.WriteLine(webRootPath);
         _userManager = userManager;
         _logger = logger;
         _context = context;
@@ -52,7 +51,6 @@ public class ProfileController : Controller
         
         //try delete existing from filesystem
         var existingFiles = Directory.GetFiles(path).Where(_=> Path.GetFileName(_).StartsWith("avatar"));
-        //Console.WriteLine("TTT "+ existingFile);
         foreach(var f in existingFiles)
             System.IO.File.Delete(f);
         //write new file
@@ -61,7 +59,6 @@ public class ProfileController : Controller
         //try modifying existing from db
         UserAvatar avatar = await _context.UserAvatars.FirstOrDefaultAsync(_=>_.ChatUserId==userId);
         if(avatar is null) {
-            Console.WriteLine("AVA NULL");
             avatar = new()
             {
                 Name = fileName,
@@ -72,7 +69,6 @@ public class ProfileController : Controller
             _context.UserAvatars.Add(avatar);
         }
         else {
-            Console.WriteLine("AVA NOT NULL");
             avatar.Path = path;
             avatar.Name = fileName;
             avatar.Url = url;

@@ -46,3 +46,5 @@ app.UseEndpoints(options=> {
 });
 app.MapHub<ChatHub>("/chat");
 app.Run();
+
+public partial class ProgramEntry { }

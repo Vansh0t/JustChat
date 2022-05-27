@@ -12,6 +12,9 @@ namespace JustChat.Tests.Fixtures
         private const string ConnectionString = "Data Source=JustChat.Tests.Unit.db;Cache=Shared";
         private static readonly object _lock = new();
         private static bool _databaseInitialized;
+        public const string USER_USERNAME = "testuser";
+        public const string USER_EMAIL = "test@test.com";
+        public const string USER_PASSWORD = "testpwd111";
         public DbFixture()
         {
             lock (_lock)
@@ -23,12 +26,12 @@ namespace JustChat.Tests.Fixtures
                         context.Database.EnsureDeleted();
                         context.Database.EnsureCreated();
                         ChatUser user = new () {
-                            Email = "test@test.com",
-                            Username = "testuser",
-                            PasswordHash = Cryptography.HashPassword("testpwd111"),
+                            Email = USER_EMAIL,
+                            Username = USER_USERNAME,
+                            PasswordHash = Cryptography.HashPassword(USER_PASSWORD),
                             IsEmailVerified = true
                         };
-                        context.Add(user);
+                        context.Users.Add(user);
                         List<ChatMessage> messages = new();
                         for(int i = 0; i < 100; i++) {
                             var msg = new ChatMessage {
@@ -39,7 +42,7 @@ namespace JustChat.Tests.Fixtures
                             messages.Add(msg);
                         }
                         
-                        context.AddRange(messages);
+                        context.ChatMessages.AddRange(messages);
                         context.SaveChanges();
                     }
                     _databaseInitialized = true;

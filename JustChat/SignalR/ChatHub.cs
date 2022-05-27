@@ -15,17 +15,14 @@ namespace JustChat.SignalR
         
         private readonly DbMain _context;
         private readonly ILogger<ChatHub> _logger;
-        private readonly IUserManager<ChatUser> _userManager;
         private readonly IChatManager _chatManager;
         public ChatHub(DbMain context,
                        ILogger<ChatHub> logger, 
-                       IUserManager<ChatUser> userManager,
                        IChatManager chatManager
                        ):base() {
             _chatManager = chatManager;
             _context = context;
             _logger = logger;
-            _userManager = userManager;
         }
         public async Task SendMessage(string message) {
             if(message is null || message.Trim() == "") return;

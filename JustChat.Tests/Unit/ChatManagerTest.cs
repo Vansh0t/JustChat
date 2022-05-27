@@ -5,7 +5,7 @@ using JustChat.Services.Chat;
 using JustChat.Tests.Fixtures;
 using Xunit;
 
-namespace JustChat.Tests;
+namespace JustChat.Tests.Unit;
 
 public class ChatManagerTest:IClassFixture<DbFixture>
 {
