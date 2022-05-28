@@ -20,10 +20,10 @@ public class ChatManagerTest:IClassFixture<DbFixture>
     {
         var msg = _chatManager.CreateChatMessage(1, "testuser", "some text", null);
         Assert.NotNull(msg);
-        Assert.Equal(DateTime.UtcNow.Second, msg.SendDateTime.Second);
+        Assert.True(DateTime.UtcNow - msg.SendDateTime < TimeSpan.FromSeconds(1)); //check utc now is set for new message, with 1 seconds error
         msg = _chatManager.CreateChatMessage(1, "testuser", "some text", DateTime.UtcNow.AddSeconds(3));
         Assert.NotNull(msg);
-        Assert.Equal(DateTime.UtcNow.Second+3, msg.SendDateTime.Second);
+        Assert.True(DateTime.UtcNow.AddSeconds(3) - msg.SendDateTime < TimeSpan.FromSeconds(1));
     }
     [Fact]
     public void TestGetBeforeTimestampQueryAsc()

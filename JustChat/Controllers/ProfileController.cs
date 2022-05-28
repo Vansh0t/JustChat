@@ -56,7 +56,7 @@ public class ProfileController : Controller
         //write new file
         using var fs = new FileStream(fullPath, FileMode.Create, FileAccess.Write);
         await image.CopyToAsync(fs);
-        //try modifying existing from db
+        //try modifying or creating existing file meta in db
         UserAvatar avatar = await _context.UserAvatars.FirstOrDefaultAsync(_=>_.ChatUserId==userId);
         if(avatar is null) {
             avatar = new()

@@ -27,53 +27,8 @@ input {
   border-right: 0;
   border-width: 1px;
 }
-#chat {
-  margin-top: 1rem;
-  list-style-type: none;
-  height: 60vh;
-  overflow-y: auto;
-  border-radius: 1rem;
-  padding: 0;
-  position: relative;
-}
-.messageItem {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 0.5rem;
-}
-
-.chatSender {
-  height: fit-content;
-  background-color: #d4ebf7;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 50%;
-  margin-right: 1rem;
-  text-align: center;
-  vertical-align:auto;
-  display: flex;
-  justify-content: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
 button{
   border-width: 1px;
-}
-.chatSender p{
-  font-weight: bold;
-  overflow-wrap: break-word;
-}
-.chatMessage {
-  background-color: #d4ebf7;
-  min-height: 50px;
-  max-width: 80%;
-  border-radius: 1rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 0.5rem;
-  overflow-wrap: break-word;
 }
 p {
   margin: 0;
@@ -81,63 +36,7 @@ p {
   font-family: 'Roboto', sans-serif;
   text-align: start;
 }
-.arrow::after {
-  content: '';
-  display: block;
-  margin-top: -2px;
-  margin-left: -25px;
-  z-index: -11;
-  border-style: solid;
-  border-width: 0 0 24px 26px;
-  border-color: transparent transparent #d4ebf7 transparent;
-}
-.chatSelf::after{
-  border-color: transparent transparent #7dc4e8 transparent;
-}
-.chatSelf {
-  background-color: #7dc4e8;
-}
-#chatInput {
-  width: 80%;
-}
-.messageTime {
-  font-size: 10px;
-  float:right;
-  vertical-align: bottom;
-  margin-top: 8px;
-  margin-left: 16px;
-  
-}
 .errorMsg {
   color: #d9534f;
 }
 
-.avatar-container {
-  display: flex;
-  justify-content: center;
-}
-.avatar-base {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  
-}
-.avatar {
-  background-color: #7dc4e8;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
-  font-size: 2rem;
-  cursor:pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  vertical-align: middle;
-  border-radius: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: auto;
-}

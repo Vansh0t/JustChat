@@ -21,9 +21,12 @@ const unsetUIError = ()=> {
 }
 
 const SCROLL_THRESHOLD = 200
+
 const chatErrorMsg = $("#chatError")
 const chatInput = $("#chatInput")
+
 var initConnAttempts = 3;
+
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/chat")
     .withAutomaticReconnect()
@@ -47,9 +50,11 @@ var selfUser = {}
 const messageTemplate= document.querySelector("#chatMessageTemplate")
 const messageSelfTemplate= document.querySelector("#chatMessageSelfTemplate")
 
+//batching
 var firstMsg
 var batchRequested = false;
 var allMessagesLoaded = false;
+
 const messages = []
 
 const scrollTo=(pos)=>{
@@ -60,6 +65,7 @@ const sendMessage = () => {
     connection.invoke("SendMessage", chatInput.val())
     chatInput.val("")
 }
+
 const renderStyle = ()=> {
     for (let i = 0; i < messages.length; i++) {
         const cur = messages[i]
@@ -124,13 +130,10 @@ const prependChatMessage = (time, sender, text, avatarUrl) => {
     })
 }
 
-var scrollBeforeBatch
-
 chatElem.scroll(() => { 
     
     if(!allMessagesLoaded && !batchRequested) {
         if(chatElem.scrollTop() < SCROLL_THRESHOLD) {
-            scrollBeforeBatch = chatElem.scrollTop()
             console.debug("requesting new batch for scroll pos", chatElem.scrollTop())
             batchRequested = true
             connection.invoke("GetMessages", firstMsg.time) //request next batch of messages before first
@@ -166,7 +169,7 @@ connection.on("ReceiveMessages", (messages) =>{
         
         console.debug("new batch of messages received, length - ", messages.length, messages)
         if(messages.length> 0)
-            firstMsg = messages.at(-1)
+            firstMsg = messages.at(-1)// last message will be first on ui
         else
             allMessagesLoaded = true //got empty messages, all messages loaded, stop requesting more
         messages.forEach(msg => {
@@ -184,7 +187,7 @@ connection.on("ReceiveMessage", (time, sender, message, avatarUrl) => {
     try {
         appendChatMessage(time, sender, message, avatarUrl)
         renderStyle()
-        if(sender === selfUser.username)
+        if(sender === selfUser.username) //client's own message, scroll to it
             scrollTo(999999999999)
     } catch (error) {
         console.error(error)
@@ -197,6 +200,7 @@ const startChat = () => {
         console.debug("Chat connection established")
         connection.invoke("InitChat")
     }).catch(function (err) {
+        //try initConnAttempts times to make initial connection
         if(initConnAttempts>0) {
             initConnAttempts-=1
             setTimeout(startChat, 2000)
@@ -209,6 +213,7 @@ const startChat = () => {
         return console.error(err.toString());
     });
 }
+//start
 loaderForElement("#chat-container")
 startChat();
 
@@ -218,13 +223,3 @@ chatInput.on("keypress", (event) =>{
         sendMessage()
     }
 });
-
-
-//document.getElementById("sendButton").addEventListener("click", function (event) {
-//    var user = document.getElementById("userInput").value;
-//    var message = document.getElementById("messageInput").value;
-//    connection.invoke("SendMessage", user, message).catch(function (err) {
-//        return console.error(err.toString());
-//    });
-//    event.preventDefault();
-//});

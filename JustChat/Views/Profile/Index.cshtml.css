@@ -1,0 +1,26 @@
+.avatar-container {
+  display: flex;
+  justify-content: center;
+}
+.avatar {
+  background-color: #7dc4e8;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  font-size: 2rem;
+  cursor:pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
