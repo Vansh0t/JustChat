@@ -22,6 +22,20 @@ services.AddJustAuth<ChatUser>(options => {
 services.AddScoped<IChatManager, ChatManager>();
 services.AddSignalR();
 
+Console.WriteLine("Ensuring database created...");
+using (var sp = services.BuildServiceProvider()) {
+    using var scope = sp.CreateScope();
+    using var context = scope.ServiceProvider.GetRequiredService<DbMain>();
+    var created = context.Database.EnsureCreated();
+    if(created)
+        Console.WriteLine("Database created");
+    else
+        Console.WriteLine("Database found. Using existing");
+
+}
+
+//ensure db created
+
 
 var app = builder.Build();
 

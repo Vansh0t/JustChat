@@ -12,6 +12,10 @@
     <None Update="EmailTemplates/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Remove="wwwroot/media/**" />
+    <Compile Remove="wwwroot/media/**" />
+    <EmbeddedResource Remove="wwwroot/media/**" />
+    <None Remove="wwwroot/media/**" />
   </ItemGroup>
   <ItemGroup>
      <InternalsVisibleTo Include="JustChat.Tests" />

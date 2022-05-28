@@ -8,33 +8,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JustChat.Controllers;
 
-[Authorize]
+
 public class ProfileController : Controller
 {
     private readonly ILogger<ProfileController> _logger;
-    private readonly IUserManager<ChatUser> _userManager;
     private readonly string webRootPath;
     private readonly DbMain _context;
 
     public ProfileController(ILogger<ProfileController> logger,
                             DbMain context,
-                            IUserManager<ChatUser> userManager,
                             IWebHostEnvironment env
     )
     {
         webRootPath = env.WebRootPath;
-        _userManager = userManager;
         _logger = logger;
         _context = context;
     }
     
     public async Task<IActionResult> Index()
     {
+        if(!User.Identity.IsAuthenticated)
+            return Redirect("/");
         var userId = User.GetUserId();
         var user = await _context.Users.Include(_=>_.Avatar).FirstAsync(_=>_.Id == userId);
         ViewData["User"] = user;
         return View();
     }
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> UploadAvatar(IFormFile image){
         if(image is null || !Path.HasExtension(image.FileName))
