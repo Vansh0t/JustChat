@@ -1,5 +1,4 @@
 using JustAuth.Data;
-using JustFile.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace JustChat.Models.Contexts

@@ -1,6 +1,5 @@
 using JustChat.Models;
 using JustChat.Models.Contexts;
-using Microsoft.EntityFrameworkCore;
 namespace JustChat.Services.Chat
 {
     public class ChatManager:IChatManager

@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using JustChat.Models;
 using Microsoft.AspNetCore.Authorization;
 using JustAuth.Services.Auth;
 using JustAuth.Controllers;
 using JustChat.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 
 namespace JustChat.Controllers;
 

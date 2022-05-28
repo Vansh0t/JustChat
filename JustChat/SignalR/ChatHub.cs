@@ -2,8 +2,6 @@ using JustChat.Models.Contexts;
 using Microsoft.AspNetCore.SignalR;
 using JustAuth.Controllers;
 using Microsoft.AspNetCore.Authorization;
-using JustAuth.Services.Auth;
-using JustChat.Models;
 using Microsoft.EntityFrameworkCore;
 using JustChat.Services.Chat;
 
