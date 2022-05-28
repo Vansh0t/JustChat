@@ -12,5 +12,5 @@ Simple web chat made with SignalR and .NET Core MVC. Authentication and Authoriz
 7. User avatars
 ## Setup
 1. Make sure you have [.NET6 Runtime](https://dotnet.microsoft.com/en-us/download) installed
-1. Create justauth.json in the root folder as described in [JustAuth Setup](https://github.com/Vansh0t/JustAuth#justauthjson)
+1. Create ``justauth.json`` in the root folder as described in [JustAuth Setup](https://github.com/Vansh0t/JustAuth#justauthjson). It is not included in release package for security reasons.
 2. Create user in PostgreSQL named ``v4`` with password ``GWw51AG161XX`` OR edit ``DefaultConnection`` string in ``appsettings.json`` for your PostgreSQL user
