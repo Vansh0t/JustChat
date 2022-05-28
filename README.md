@@ -10,3 +10,8 @@ Simple web chat made with SignalR and .NET Core MVC. Authentication and Authoriz
 5. Pagination for chat history (25 messages in a batch) while scrolling
 6. User profile
 7. User avatars
+## Setup
+1. Install nugets from [JustAuth](https://github.com/Vansh0t/JustAuth) and [JustFile](https://github.com/Vansh0t/JustFile)
+1. Create justauth.json in the root folder as described in [JustAuth Setup](https://github.com/Vansh0t/JustAuth#setup)
+2. Set up PostgreSQL database and apply migrations
+3. Run with ``dotnet run`` or Visual Studio UI
