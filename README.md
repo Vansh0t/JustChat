@@ -1,5 +1,5 @@
 # JustChat
-Simple web chat made with SignalR and .NET 6 MVC. Authentication and Authorization backend is based on my [JustAuth](https://github.com/Vansh0t/JustAuth) package. It also uses my small [JustFile](https://github.com/Vansh0t/JustFile) package for physical file models. PostgreSQL is used as a database with [Npgsql](https://www.npgsql.org) EF Core provider.
+Simple web chat made with SignalR and .NET 6 MVC. Authentication and Authorization backend is based on my [JustAuth](https://github.com/Vansh0t/JustAuth) package. PostgreSQL is used as a database with [Npgsql](https://www.npgsql.org) EF Core provider.
 ## Preview
 ![JustChat2](https://user-images.githubusercontent.com/35566242/170767549-ea2d441e-fc11-4d13-b4b5-5d44117a59cd.gif)
 ## Features
